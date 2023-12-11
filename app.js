@@ -5,7 +5,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.post('/downloadRingChart', (req, res) => {
+app.post('/downloadRingChart', async (req, res) => {
     const {data} = req.body;
 
     if (!data || typeof data !== 'object') {
@@ -38,7 +38,7 @@ app.post('/downloadRingChart', (req, res) => {
         ctx.fill();
 
         startAngle += sliceAngle;
-    });
+    })
 
     const legendX = 50;
     const legendY = centerY + outerRadius + 20;
@@ -56,7 +56,7 @@ app.post('/downloadRingChart', (req, res) => {
         const label = categories[i];
         ctx.fillText(label, legendX + 20, legendItemY + 12);
 
-        const percentageText = `${percentages[i]}%`;
+        const percentageText = `${percentages[i].toFixed(2)}%`;
         const percentageTextWidth = ctx.measureText(percentageText).width;
         ctx.fillText(percentageText, legendX + 150 - percentageTextWidth + labelOffset, legendItemY + 12);
     }
